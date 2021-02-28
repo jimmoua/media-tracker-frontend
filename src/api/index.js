@@ -1,14 +1,13 @@
 import axios from "axios";
 
 let apiUri;
-if(process.env.NODE_ENV == "production") {
+if(process.env.NODE_ENV === "production") {
   apiUri = process.env.REACT_APP_API_PROD;
 } else {
   apiUri = process.env.REACT_APP_API_DEV;
 }
 
 export async function login(username, password) {
-  console.log(apiUri);
   let responseStatus;
   try {
     const res = await axios.post(`${apiUri}/login`, { username, password }, { withCredentials: true });
@@ -18,4 +17,13 @@ export async function login(username, password) {
     responseStatus = err?.response?.status || 500;
   }
   return responseStatus;
+}
+
+export async function fetchMediaList() {
+  try {
+    const response = await axios.get(`${apiUri}/`, { withCredentials: true });
+    return response.data;
+  } catch(err) {
+    return err?.response?.status || 500;
+  }
 }
