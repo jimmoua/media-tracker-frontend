@@ -33,6 +33,7 @@ const LoginPage = () => {
     } else if(responseCode == 200) {
       setLoginErrorNotification(<></>);
       window.location.replace("/");
+      return;
     } else {
       setLoginErrorNotification(notification("Unable to login please try again later"));
     }

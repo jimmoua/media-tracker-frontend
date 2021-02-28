@@ -35,6 +35,22 @@ function App() {
         return <Hero />;
       case 401:
         return <LoginPage />;
+      case 500:
+        return (
+          <>
+            <div className="section">
+              <div className="container is-mobile">
+                <div className="">
+                  <div className="notification is-danger is-light has-text-centered">
+                    <i className="fas fa-frown"></i>
+                    <div>I&apos;m broken!</div>
+                    <div>Ahhhhhhhhhhhhhhhhhhhhhhhhhh!</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        );
       default:
         return <Loader />;
     }
