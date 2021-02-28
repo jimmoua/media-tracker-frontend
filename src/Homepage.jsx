@@ -1,6 +1,6 @@
 import React from "react";
 
-function Hero() {
+function Homepage() {
   return (
     <section className="hero is-primary is-medium">
       <div className="hero-body">
@@ -11,4 +11,4 @@ function Hero() {
   );
 }
 
-export default Hero;
+export default Homepage;
