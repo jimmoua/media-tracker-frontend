@@ -1,8 +1,9 @@
 import React from "react";
 import axios from "axios";
 import PropagateLoader from "react-spinners/PropagateLoader";
-import Hero from "./Hero";
+import Homepage from "./Homepage";
 import LoginPage from "./LoginPage";
+import ShowError from "./ShowError";
 
 function App() {
   const [statusCode, setStatusCode] = React.useState(null);
@@ -32,7 +33,7 @@ function App() {
   function determineRenderedComponent() {
     switch(statusCode) {
       case 200:
-        return <Hero />;
+        return <Homepage />;
       case 401:
         return <LoginPage />;
       case 500:
@@ -40,13 +41,7 @@ function App() {
           <>
             <div className="section">
               <div className="container is-mobile">
-                <div className="">
-                  <div className="notification is-danger is-light has-text-centered">
-                    <i className="fas fa-frown"></i>
-                    <div>I&apos;m broken!</div>
-                    <div>Ahhhhhhhhhhhhhhhhhhhhhhhhhh!</div>
-                  </div>
-                </div>
+                {ShowError()}
               </div>
             </div>
           </>
