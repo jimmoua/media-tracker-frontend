@@ -53,3 +53,17 @@ export async function deleteMediaList(id) {
     return err?.response?.status || 500;
   }
 }
+
+export async function createNewMedia(media) {
+  const postData = {
+    title: media.title,
+    type: media.type,
+    status: media.status
+  };
+  try {
+    const response = await axios.post(`${apiUri}/new`, postData, { withCredentials: true });
+    return response.status;
+  } catch(err) {
+    return err?.response?.status || 500;
+  }
+}

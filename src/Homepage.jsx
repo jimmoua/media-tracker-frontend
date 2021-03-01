@@ -4,6 +4,7 @@ import ShowError from "./ShowError";
 import { fetchMediaList } from "./api";
 import ListTable from "./ListTable";
 import MediaModal from "./MediaModal";
+import NewModal from "./NewModal";
 
 function Homepage() {
   const [list, setList] = React.useState();
@@ -22,6 +23,10 @@ function Homepage() {
     setModal(
       <MediaModal media={e} modalCloseHandler={modalCloseHandler} />
     );
+  }
+  
+  function setNewModal() {
+    setModal(<NewModal modalCloseHandler={modalCloseHandler} />);
   }
 
   function fetchAndSetList() {
@@ -75,6 +80,14 @@ function Homepage() {
         <div className="hero-body">
           <p className="title">Media Tracker</p>
           <p className="subtitle">because i never know where i&apos;m at {"¯\\_(ツ)_/¯"}</p>
+          <div className="column is-mobile is-small is-one-fifth">
+            <button
+              className="button is-light is-small is-rounded"
+              onClick={setNewModal}
+            >
+              New
+            </button>
+          </div>
         </div>
       </div>
       <section className="section is-mobile has-text-centered">
