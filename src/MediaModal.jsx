@@ -22,6 +22,7 @@ const MediaModal = ({ media, modalCloseHandler }) => {
   const defaultBtnSubmitClass = "button is-primary mt-4";
   const btnLoadingClass = defaultBtnSubmitClass.concat(" is-loading");
   const [btnLoading, setBtnLoading] = React.useState(defaultBtnSubmitClass);
+  const [error, setError] = React.useState();
   const modal = (
     <div className="modal is-clipped is-active">
       <div className="modal-background" onClick={btnLoading.includes("is-loading") ? (() => {}) : modalCloseHandler} />
@@ -29,6 +30,7 @@ const MediaModal = ({ media, modalCloseHandler }) => {
         <div className="box">
           <div className="media">
             <div className="media-content is-center">
+              {error}
               <form onSubmit={e => e.preventDefault()}>
                 <div className="field">
                   <label className="label">Title</label>
@@ -94,11 +96,21 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                       }
                       (async() => {
                         setBtnLoading(btnLoadingClass);
-                        await updateMediaList({
+                        const statusCode = await updateMediaList({
                           id: media.id,
                           title, status, type
                         });
                         setBtnLoading(defaultBtnSubmitClass);
+                        if(statusCode !== 200) {
+                          return setError(
+                            <>
+                              <div className="notification is-danger is-light">
+                                <div>error updating media</div>
+                                <div>status code: {statusCode}</div>
+                              </div>
+                            </>
+                          );
+                        }
                         modalCloseHandler(true);
                       })();
                     }}
