@@ -22,7 +22,7 @@ export async function login(username, password) {
 export async function fetchMediaList() {
   try {
     const response = await axios.get(`${apiUri}/`, { withCredentials: true });
-    return response.data;
+    return response.data.medias;
   } catch(err) {
     return err?.response?.status || 500;
   }

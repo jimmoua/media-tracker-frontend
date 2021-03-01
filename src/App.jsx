@@ -4,6 +4,7 @@ import PropagateLoader from "react-spinners/PropagateLoader";
 import Homepage from "./Homepage";
 import LoginPage from "./LoginPage";
 import ShowError from "./ShowError";
+import "./app.css";
 
 function App() {
   const [statusCode, setStatusCode] = React.useState(null);
