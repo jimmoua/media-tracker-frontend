@@ -62,7 +62,7 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                       >
                         <span>{type}</span>
                         <span className="icon is-small">
-                          <i className="fas fa-angle-down" aria-hidden="true"></i>
+                          <i className="fas fa-angle-down" aria-hidden="true" />
                         </span>
                       </button>
                     </div>
@@ -75,8 +75,8 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                     </div>
                   </div>
                 </div>
-                <div className="container">
-                  <button className="button is-primary mt-6" style={{ width: "75%" }}>Update</button>
+                <div className="column is-half is-centered container">
+                  <button className="button is-primary mt-4">Update</button>
                 </div>
               </form>
             </div>
