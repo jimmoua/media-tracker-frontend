@@ -44,3 +44,12 @@ export async function updateMediaList(media) {
     return err?.response?.status || 500;
   }
 }
+
+export async function deleteMediaList(id) {
+  try {
+    const response = await axios.post(`${apiUri}/delete`, { id }, { withCredentials: true });
+    return response.status;
+  } catch(err) {
+    return err?.response?.status || 500;
+  }
+}

@@ -11,8 +11,8 @@ function Homepage() {
 
   function modalCloseHandler(didUpdate = false) {
     if(didUpdate === true) {
-      setList(undefined);
       fetchAndSetList();
+      return;
     }
     setModal(undefined);
   }

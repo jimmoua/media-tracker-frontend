@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { updateMediaList } from "./api";
+import { deleteMediaList } from "./api";
 
 /**
  * @param media
@@ -15,28 +16,34 @@ const MediaModal = ({ media, modalCloseHandler }) => {
   const dropdownClassInactive = "dropdown";
   const dropdownClassActive = dropdownClassInactive.concat(" is-active");
   const [dropdownClass, setDropdownClass] = React.useState(dropdownClassInactive);
+  const [deleted, setDeleted] = React.useState(false);
   function dropDownItemOnClick(newType) {
     setType(newType);
     setDropdownClass(dropdownClassInactive);
   }
+  function shouldCloseModal() {
+    return !(btnLoading.includes("is-loading") || btnDeleteCalled.includes("is-loading"));
+  }
   const defaultBtnSubmitClass = "button is-primary mt-4";
+  const defaultBtnDeleteClass = "button is-danger is-light mt-4";
   const btnLoadingClass = defaultBtnSubmitClass.concat(" is-loading");
   const [btnLoading, setBtnLoading] = React.useState(defaultBtnSubmitClass);
-  const [error, setError] = React.useState();
+  const [statusMessage, setStatusMessage] = React.useState();
+  const [btnDeleteCalled, setBtnDeleteCalled] = React.useState(defaultBtnDeleteClass);
   const modal = (
     <div className="modal is-clipped is-active">
-      <div className="modal-background" onClick={btnLoading.includes("is-loading") ? (() => {}) : modalCloseHandler} />
+      <div className="modal-background" onClick={shouldCloseModal() ? modalCloseHandler : null} />
       <div className="modal-content">
         <div className="box">
           <div className="media">
             <div className="media-content is-center">
-              {error}
-              <form onSubmit={e => e.preventDefault()}>
+              {statusMessage}
+              <form id="mediaUpdateForm" onSubmit={e => e.preventDefault()}>
                 <div className="field">
                   <label className="label">Title</label>
                   <input
                     required
-                    disabled={btnLoading.includes("is-loading")}
+                    disabled={btnLoading.includes("is-loading") || deleted}
                     type="text"
                     className="input has-text-centered"
                     value={title}
@@ -49,7 +56,7 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                   <label className="label">Status</label>
                   <input
                     required
-                    disabled={btnLoading.includes("is-loading")}
+                    disabled={btnLoading.includes("is-loading") || deleted}
                     type="text"
                     className="input has-text-centered"
                     value={status}
@@ -70,7 +77,7 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                         onClick={() => {
                           setDropdownClass(dropdownClass === dropdownClassActive ? dropdownClassInactive : dropdownClassActive);
                         }}
-                        disabled={btnLoading.includes("is-loading")}
+                        disabled={btnLoading.includes("is-loading") || deleted}
                       >
                         <span>{type}</span>
                         <span className="icon is-small">
@@ -87,8 +94,17 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                     </div>
                   </div>
                 </div>
-                <div className="column is-half is-centered container field">
+                <button
+                  type="button"
+                  className="modal-close is-large"
+                  aria-label="close"
+                  onClick={shouldCloseModal() ? modalCloseHandler : null}
+                />
+              </form>
+              <div className="column is-one-quarter is-centered container field">
+                <div className="buttons has-addons">
                   <button
+                    form="mediaUpdateForm"
                     className={btnLoading}
                     onClick={() => {
                       if(title.length === 0 || status.length === 0) {
@@ -102,7 +118,7 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                         });
                         setBtnLoading(defaultBtnSubmitClass);
                         if(statusCode !== 200) {
-                          return setError(
+                          return setStatusMessage(
                             <>
                               <div className="notification is-danger is-light">
                                 <div>error updating media</div>
@@ -110,21 +126,60 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                               </div>
                             </>
                           );
+                        } else {
+                          setStatusMessage(
+                            <>
+                              <div className="notification is-success is-light">
+                                <div>{`"${title}"`} has been updated</div>
+                              </div>
+                            </>
+                          );
                         }
                         modalCloseHandler(true);
                       })();
                     }}
+                    disabled={deleted}
                   >
                     Update
                   </button>
+                  <button
+                    type={"button"}
+                    className={btnDeleteCalled}
+                    onClick={() => {
+                      const ans = confirm(`Are you sure you want to delete "${title}"?`);
+                      if(ans) {
+                        (async() => {
+                          setBtnDeleteCalled(defaultBtnDeleteClass.concat(" is-loading"));
+                          const statusCode = await deleteMediaList(media.id);
+                          if(statusCode !== 200) {
+                            return setStatusMessage(
+                              <>
+                                <div className="notification is-danger is-light">
+                                  <div>Unable to delete media {`"${title}"`}</div>
+                                </div>
+                              </>
+                            );
+                          } else {
+                            setStatusMessage(
+                              <>
+                                <div className="notification is-success">
+                                  <div>{`"${title}"`} was deleted</div>
+                                </div>
+                              </>
+                            );
+                            setDeleted(true);
+                          }
+                          modalCloseHandler(true);
+                          setBtnDeleteCalled(defaultBtnDeleteClass);
+                        })();
+                      }
+                    }}
+                    disabled={deleted}
+                  >
+                    Delete
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  className="modal-close is-large"
-                  aria-label="close"
-                  onClick={btnLoading.includes("is-loading") ? (() => {}) : modalCloseHandler}
-                />
-              </form>
+              </div>
             </div>
           </div>
         </div>
