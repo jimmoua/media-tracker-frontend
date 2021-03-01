@@ -27,3 +27,20 @@ export async function fetchMediaList() {
     return err?.response?.status || 500;
   }
 }
+
+export async function updateMediaList(media) {
+  const postData = {
+    id: media.id,
+    data: {
+      title: media.title,
+      status: media.status,
+      type: media.type
+    }
+  };
+  try {
+    const response = await axios.post(`${apiUri}/update`, postData, { withCredentials: true });
+    return response.status;
+  } catch (err) {
+    return err?.response?.status || 500;
+  }
+}
