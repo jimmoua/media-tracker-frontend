@@ -9,14 +9,15 @@ function Homepage() {
   const [list, setList] = React.useState();
   const [currentModal, setModal] = React.useState();
 
-  function modalCloseHandler() {
-    setModal(
-      <React.Fragment></React.Fragment>
-    );
+  function modalCloseHandler(didUpdate = false) {
+    if(didUpdate === true) {
+      setList(undefined);
+      fetchAndSetList();
+    }
+    setModal(undefined);
   }
 
   function modalSetHandler(e) {
-    console.log(e);
     setModal(undefined);
     setModal(
       <MediaModal media={e} modalCloseHandler={modalCloseHandler} />
@@ -31,7 +32,6 @@ function Homepage() {
       } else {
         setList(null);
       }
-      console.log();
     })();
   }
 

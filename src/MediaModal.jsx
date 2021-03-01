@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { updateMediaList } from "./api";
 
 /**
  * @param media
- * @param modalCloseHandler - closes the modal by removing it from the DOM
+ * @param modalCloseHandler
  * @returns {JSX.Element}
  * @constructor
  */
@@ -18,9 +19,12 @@ const MediaModal = ({ media, modalCloseHandler }) => {
     setType(newType);
     setDropdownClass(dropdownClassInactive);
   }
+  const defaultBtnSubmitClass = "button is-primary mt-4";
+  const btnLoadingClass = defaultBtnSubmitClass.concat(" is-loading");
+  const [btnLoading, setBtnLoading] = React.useState(defaultBtnSubmitClass);
   const modal = (
     <div className="modal is-clipped is-active">
-      <div className="modal-background" onClick={modalCloseHandler} />
+      <div className="modal-background" onClick={btnLoading.includes("is-loading") ? (() => {}) : modalCloseHandler} />
       <div className="modal-content">
         <div className="box">
           <div className="media">
@@ -29,6 +33,8 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                 <div className="field">
                   <label className="label">Title</label>
                   <input
+                    required
+                    disabled={btnLoading.includes("is-loading")}
                     type="text"
                     className="input has-text-centered"
                     value={title}
@@ -40,6 +46,8 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                 <div className="field">
                   <label className="label">Status</label>
                   <input
+                    required
+                    disabled={btnLoading.includes("is-loading")}
                     type="text"
                     className="input has-text-centered"
                     value={status}
@@ -53,12 +61,14 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                   <div className={dropdownClass}>
                     <div className="dropdown-trigger">
                       <button
+                        type={"button"}
                         className="button"
                         aria-haspopup="true"
                         aria-controls="dropdown-menu"
                         onClick={() => {
                           setDropdownClass(dropdownClass === dropdownClassActive ? dropdownClassInactive : dropdownClassActive);
                         }}
+                        disabled={btnLoading.includes("is-loading")}
                       >
                         <span>{type}</span>
                         <span className="icon is-small">
@@ -75,19 +85,38 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                     </div>
                   </div>
                 </div>
-                <div className="column is-half is-centered container">
-                  <button className="button is-primary mt-4">Update</button>
+                <div className="column is-half is-centered container field">
+                  <button
+                    className={btnLoading}
+                    onClick={() => {
+                      if(title.length === 0 || status.length === 0) {
+                        return;
+                      }
+                      (async() => {
+                        setBtnLoading(btnLoadingClass);
+                        await updateMediaList({
+                          id: media.id,
+                          title, status, type
+                        });
+                        setBtnLoading(defaultBtnSubmitClass);
+                        modalCloseHandler(true);
+                      })();
+                    }}
+                  >
+                    Update
+                  </button>
                 </div>
+                <button
+                  type="button"
+                  className="modal-close is-large"
+                  aria-label="close"
+                  onClick={btnLoading.includes("is-loading") ? (() => {}) : modalCloseHandler}
+                />
               </form>
             </div>
           </div>
         </div>
       </div>
-      <button
-        className="modal-close is-large"
-        aria-label="close"
-        onClick={modalCloseHandler}
-      />
     </div>
   );
   return (
