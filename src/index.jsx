@@ -1,11 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import Amplify from "aws-amplify";
+import awsconfig from "./aws-exports";
 import "bulma/css/bulma.min.css";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+Amplify.configure(awsconfig);
+
+document.addEventListener("DOMContentLoaded", () => {
+  ReactDOM.render(
+    <App />,
+    document.body.appendChild(document.createElement("div"))
+  );
+});

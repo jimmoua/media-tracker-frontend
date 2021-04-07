@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mediatrackerfrontend-staging-134935-authRole",
+      "UnauthRoleArn": "arn:aws:iam::850611461796:role/amplify-mediatrackerfrontend-staging-134935-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::850611461796:role/amplify-mediatrackerfrontend-staging-134935-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-mediatrackerfrontend-staging-134935-deployment",
+      "UnauthRoleName": "amplify-mediatrackerfrontend-staging-134935-unauthRole",
+      "StackName": "amplify-mediatrackerfrontend-staging-134935",
+      "StackId": "arn:aws:cloudformation:us-east-2:850611461796:stack/amplify-mediatrackerfrontend-staging-134935/171c6990-97a8-11eb-b0b1-0a4b7596b37e",
+      "AmplifyAppId": "djon2x368ojd6"
+    },
+    "categories": {
+      "auth": {
+        "mediatrackerfrontend": {}
+      }
+    }
+  }
+}

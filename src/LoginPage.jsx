@@ -1,5 +1,5 @@
 import React from "react";
-import { login } from "./api";
+import { Auth } from "aws-amplify";
 
 const LoginPage = () => {
   const initialButtonClasses = "button is-primary is-focused is-fullwidth";
@@ -21,24 +21,22 @@ const LoginPage = () => {
     }
     setDisabledStatus(true);
     setButtonClasses(initialButtonClasses + " is-loading");
-    const responseCode = await login(username, password);
-    console.log(responseCode);
-    const notification = (message) => (
-      <div className="notification is-danger is-light has-text-centered">
-        {message}
-      </div>
-    );
-    if(responseCode === 401) {
-      setLoginErrorNotification(notification("Invalid credentials"));
-    } else if(responseCode == 200) {
-      setLoginErrorNotification(<></>);
+    try {
+      const user = await Auth.signIn(username, password);
+      console.log(user);
       window.location.replace("/");
-      return;
-    } else {
-      setLoginErrorNotification(notification("Unable to login please try again later"));
+    } catch(err) {
+      console.log(err);
+      const notification = (message) => (
+        <div className="notification is-danger is-light has-text-centered">
+          {message}
+        </div>
+      );
+      setLoginErrorNotification(notification("Unable to login"));
+      setDisabledStatus(false);
+      setButtonClasses(initialButtonClasses);
+      console.log(username, password);
     }
-    setDisabledStatus(false);
-    setButtonClasses(initialButtonClasses);
   }
 
   return (
