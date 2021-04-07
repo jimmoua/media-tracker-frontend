@@ -1,5 +1,5 @@
 import React from "react";
-import { login } from "./api";
+import { Auth } from "aws-amplify";
 
 const LoginPage = () => {
   const initialButtonClasses = "button is-primary is-focused is-fullwidth";
@@ -8,6 +8,14 @@ const LoginPage = () => {
   const [disabledStatus, setDisabledStatus] = React.useState(false);
   const [buttonClasses, setButtonClasses] = React.useState(initialButtonClasses);
   const [loginErrorNotification, setLoginErrorNotification] = React.useState();
+
+  async function signIn() {
+    try {
+      const user = await Auth.signIn(username, password);
+    } catch (error) {
+      console.log("error signing in", error);
+    }
+  }
 
   function setUsernameOnClick(e) {
     setUsername(e.target.value);
@@ -21,24 +29,17 @@ const LoginPage = () => {
     }
     setDisabledStatus(true);
     setButtonClasses(initialButtonClasses + " is-loading");
-    const responseCode = await login(username, password);
-    console.log(responseCode);
-    const notification = (message) => (
-      <div className="notification is-danger is-light has-text-centered">
-        {message}
-      </div>
-    );
-    if(responseCode === 401) {
-      setLoginErrorNotification(notification("Invalid credentials"));
-    } else if(responseCode == 200) {
-      setLoginErrorNotification(<></>);
-      window.location.replace("/");
-      return;
-    } else {
-      setLoginErrorNotification(notification("Unable to login please try again later"));
+    // const responseCode = await login(username, password);
+    try {
+      await Auth.signIn(username, password);
+    } catch(err) {
+      const notification = (message) => (
+        <div className="notification is-danger is-light has-text-centered">
+          Login message here
+          {/*{message}*/}
+        </div>
+      );
     }
-    setDisabledStatus(false);
-    setButtonClasses(initialButtonClasses);
   }
 
   return (

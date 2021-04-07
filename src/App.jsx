@@ -7,19 +7,6 @@ import ShowError from "./ShowError";
 import "./app.css";
 
 function App() {
-  const [statusCode, setStatusCode] = React.useState(null);
-  async function verifyLoginState() {
-    try {
-      const response = await axios.get("http://localhost:8888/", { withCredentials: true });
-      setStatusCode(response.status);
-    } catch (err) {
-      console.log(err?.response?.status);
-      setStatusCode(err?.response?.status || 500);
-    }
-  }
-  React.useState(() => {
-    verifyLoginState();
-  }, [statusCode]);
   const Loader = () => {
     return (
       <>
@@ -32,24 +19,7 @@ function App() {
     );
   };
   function determineRenderedComponent() {
-    switch(statusCode) {
-      case 200:
-        return <Homepage />;
-      case 401:
-        return <LoginPage />;
-      case 500:
-        return (
-          <>
-            <div className="section">
-              <div className="container is-mobile">
-                {ShowError()}
-              </div>
-            </div>
-          </>
-        );
-      default:
-        return <Loader />;
-    }
+    return <Homepage />;
   }
   return (
     <>

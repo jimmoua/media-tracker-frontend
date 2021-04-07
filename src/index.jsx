@@ -3,9 +3,9 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "bulma/css/bulma.min.css";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+document.addEventListener("DOMContentLoaded", () => {
+  ReactDOM.render(
+    <App />,
+    document.body.appendChild(document.createElement("div"))
+  );
+});

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiUri = "https://1a4cocxkoi.execute-api.us-east-2.amazonaws.com/dev/api";
+const apiUri = "https://1a4cocxkoi.execute-api.us-east-2.amazonaws.com/dev";
 
 export async function login(username, password) {
   let responseStatus;
@@ -16,8 +16,8 @@ export async function login(username, password) {
 
 export async function fetchMediaList() {
   try {
-    const response = await axios.get(`${apiUri}/api/all`);
-    return response.data.medias;
+    const response = await axios.get(`${apiUri}/api/all`, { withCredentials: true });
+    return response.data;
   } catch(err) {
     return err?.response?.status || 500;
   }
@@ -59,6 +59,7 @@ export async function createNewMedia(media) {
     const response = await axios.post(`${apiUri}/api/new`, postData);
     return response.status;
   } catch(err) {
+    console.log(err);
     return err?.response?.status || 500;
   }
 }
