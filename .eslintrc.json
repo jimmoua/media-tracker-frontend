@@ -1,74 +1,61 @@
 {
-  "env": {
-    "browser": true,
-    "es2021": true,
-    "jest/globals": true,
-    "node": true
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:jest/style"
-  ],
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
+    "env": {
+        "browser": true,
+        "es2021": true
     },
-    "ecmaVersion": 12,
-    "sourceType": "module"
-  },
-  "plugins": [
-    "react",
-    "jest"
-  ],
-  "rules": {
-    "no-multiple-empty-lines": ["warn", { "max": 1 }],
-    "indent": [
-      "error", 2,
-      {"SwitchCase": 1}
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
     ],
-    "space-before-function-paren": ["error", "never"],
-    "space-before-blocks": ["error", "always"],
-    "no-unused-vars": "warn",
-    "comma-spacing": [
-      2
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
     ],
-    "comma-dangle": ["error", "never"],
-    "object-curly-spacing": [
-      "error",
-      "always"
-    ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "quotes": [
-      "error",
-      "double"
-    ],
-    "jsx-quotes": [
-      2
-    ],
-    "semi": [
-      "error",
-      "always"
-    ],
-    "space-infix-ops": ["error", { "int32Hint": false }],
-    "no-multi-spaces": [2],
-    "no-empty": "warn"
-  },
-  "settings": {
-    "react": {
-      "pragma": "React",
-      "version": "detect"
-    }
-  },
-  "overrides": [
-    {
-      "files": ["**/*.jsx/*.js"],
-      "rules": {
-        "strict": "off"
+    "rules": {
+        "no-multiple-empty-lines": ["warn", { "max": 1 }],
+        "indent": [
+            "error", 2,
+            {"SwitchCase": 1}
+        ],
+        "space-before-function-paren": ["error", "never"],
+        "space-before-blocks": ["error", "always"],
+        "no-unused-vars": "warn",
+        "comma-spacing": [
+            2
+        ],
+        "comma-dangle": ["error", "never"],
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "jsx-quotes": [
+            2
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "space-infix-ops": ["error", { "int32Hint": false }],
+        "no-multi-spaces": [2],
+        "no-empty": "warn"
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
       }
     }
-  ]
 }
