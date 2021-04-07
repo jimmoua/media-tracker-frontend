@@ -9,14 +9,6 @@ const LoginPage = () => {
   const [buttonClasses, setButtonClasses] = React.useState(initialButtonClasses);
   const [loginErrorNotification, setLoginErrorNotification] = React.useState();
 
-  async function signIn() {
-    try {
-      const user = await Auth.signIn(username, password);
-    } catch (error) {
-      console.log("error signing in", error);
-    }
-  }
-
   function setUsernameOnClick(e) {
     setUsername(e.target.value);
   }
@@ -29,16 +21,21 @@ const LoginPage = () => {
     }
     setDisabledStatus(true);
     setButtonClasses(initialButtonClasses + " is-loading");
-    // const responseCode = await login(username, password);
     try {
-      await Auth.signIn(username, password);
+      const user = await Auth.signIn(username, password);
+      console.log(user);
+      window.location.replace("/");
     } catch(err) {
+      console.log(err);
       const notification = (message) => (
         <div className="notification is-danger is-light has-text-centered">
-          Login message here
-          {/*{message}*/}
+          {message}
         </div>
       );
+      setLoginErrorNotification(notification("Unable to login"));
+      setDisabledStatus(false);
+      setButtonClasses(initialButtonClasses);
+      console.log(username, password);
     }
   }
 

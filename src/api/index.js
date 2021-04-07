@@ -1,22 +1,24 @@
-import axios from "axios";
+import _axios from "axios";
+import { Auth } from "aws-amplify";
 
-const apiUri = "https://1a4cocxkoi.execute-api.us-east-2.amazonaws.com/dev";
+let axios = _axios.create({
+  baseURL: "https://1a4cocxkoi.execute-api.us-east-2.amazonaws.com/dev"
+});
 
-export async function login(username, password) {
-  let responseStatus;
-  try {
-    const res = await axios.post(`${apiUri}/login`, { username, password });
-    console.log(res.data);
-    responseStatus = res.status;
-  } catch(err) {
-    responseStatus = err?.response?.status || 500;
-  }
-  return responseStatus;
-}
+const token = async() => {
+  return (await Auth.currentAuthenticatedUser()).getSignInUserSession().getIdToken().getJwtToken();
+};
 
 export async function fetchMediaList() {
   try {
-    const response = await axios.get(`${apiUri}/api/all`, { withCredentials: true });
+    const response = await axios.get(
+      "/api/all",
+      {
+        headers: {
+          "Authorization": await token()
+        }
+      }
+    );
     return response.data;
   } catch(err) {
     return err?.response?.status || 500;
@@ -26,14 +28,20 @@ export async function fetchMediaList() {
 export async function updateMediaList(media) {
   const postData = {
     id: media.id,
-    data: {
-      title: media.title,
-      status: media.status,
-      type: media.type
-    }
+    title: media.title,
+    status: media.status,
+    type: media.type
   };
   try {
-    const response = await axios.post(`${apiUri}/api/update`, postData);
+    const response = await axios.post(
+      "/api/update",
+      postData,
+      {
+        headers: {
+          "Authorization": await token()
+        }
+      }
+    );
     return response.status;
   } catch (err) {
     return err?.response?.status || 500;
@@ -42,7 +50,15 @@ export async function updateMediaList(media) {
 
 export async function deleteMediaList(id) {
   try {
-    const response = await axios.post(`${apiUri}/api/delete`, { id });
+    const response = await axios.post(
+      "/api/delete",
+      { id },
+      {
+        headers: {
+          "Authorization": await token()
+        }
+      }
+    );
     return response.status;
   } catch(err) {
     return err?.response?.status || 500;
@@ -56,10 +72,19 @@ export async function createNewMedia(media) {
     status: media.status
   };
   try {
-    const response = await axios.post(`${apiUri}/api/new`, postData);
+    // const response = await axios.post("/api/new", postData);
+    const response = await axios.post(
+      "/api/new",
+      postData,
+      {
+        headers: {
+          "Authorization": await token()
+        }
+      }
+    );
+
     return response.status;
   } catch(err) {
-    console.log(err);
     return err?.response?.status || 500;
   }
 }

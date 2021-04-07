@@ -1,12 +1,12 @@
 import React from "react";
-import axios from "axios";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import Homepage from "./Homepage";
 import LoginPage from "./LoginPage";
-import ShowError from "./ShowError";
 import "./app.css";
+import { Auth } from "aws-amplify";
 
 function App() {
+  const [isLoggedIn, setLoggedIn] = React.useState();
   const Loader = () => {
     return (
       <>
@@ -18,8 +18,24 @@ function App() {
       </>
     );
   };
+  React.useEffect(() => {
+    (async() => {
+      try {
+        await Auth.currentAuthenticatedUser();
+        setLoggedIn(true);
+      } catch(err) {
+        setLoggedIn(false);
+        console.log(err);
+      }
+    })();
+  });
   function determineRenderedComponent() {
-    return <Homepage />;
+    if(isLoggedIn) {
+      return <Homepage />;
+    } else if(isLoggedIn === false) {
+      return <LoginPage />;
+    }
+    return <Loader />;
   }
   return (
     <>

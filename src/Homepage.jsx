@@ -5,6 +5,7 @@ import { fetchMediaList } from "./api";
 import ListTable from "./ListTable";
 import MediaModal from "./MediaModal";
 import NewModal from "./NewModal";
+import { Auth } from "aws-amplify";
 
 function Homepage() {
   const [list, setList] = React.useState();
@@ -86,6 +87,22 @@ function Homepage() {
               onClick={setNewModal}
             >
               New
+            </button>
+            <button
+              className="button is-light is-small is-rounded mt-4 is-danger"
+              onClick={() => {
+                (async() => {
+                  try {
+                    await Auth.signOut();
+                    window.location.replace("/");
+                  } catch(err) {
+                    alert("unable to logout");
+                    console.error(err);
+                  }
+                })();
+              }}
+            >
+              Logout
             </button>
           </div>
         </div>
