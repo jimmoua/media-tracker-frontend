@@ -1,16 +1,11 @@
 import axios from "axios";
 
-let apiUri;
-if(process.env.NODE_ENV === "production") {
-  apiUri = process.env.REACT_APP_API_PROD;
-} else {
-  apiUri = process.env.REACT_APP_API_DEV;
-}
+const apiUri = "https://1a4cocxkoi.execute-api.us-east-2.amazonaws.com/dev/api";
 
 export async function login(username, password) {
   let responseStatus;
   try {
-    const res = await axios.post(`${apiUri}/login`, { username, password }, { withCredentials: true });
+    const res = await axios.post(`${apiUri}/login`, { username, password });
     console.log(res.data);
     responseStatus = res.status;
   } catch(err) {
@@ -21,7 +16,7 @@ export async function login(username, password) {
 
 export async function fetchMediaList() {
   try {
-    const response = await axios.get(`${apiUri}/`, { withCredentials: true });
+    const response = await axios.get(`${apiUri}/api/all`);
     return response.data.medias;
   } catch(err) {
     return err?.response?.status || 500;
@@ -38,7 +33,7 @@ export async function updateMediaList(media) {
     }
   };
   try {
-    const response = await axios.post(`${apiUri}/update`, postData, { withCredentials: true });
+    const response = await axios.post(`${apiUri}/api/update`, postData);
     return response.status;
   } catch (err) {
     return err?.response?.status || 500;
@@ -47,7 +42,7 @@ export async function updateMediaList(media) {
 
 export async function deleteMediaList(id) {
   try {
-    const response = await axios.post(`${apiUri}/delete`, { id }, { withCredentials: true });
+    const response = await axios.post(`${apiUri}/api/delete`, { id });
     return response.status;
   } catch(err) {
     return err?.response?.status || 500;
@@ -61,7 +56,7 @@ export async function createNewMedia(media) {
     status: media.status
   };
   try {
-    const response = await axios.post(`${apiUri}/new`, postData, { withCredentials: true });
+    const response = await axios.post(`${apiUri}/api/new`, postData);
     return response.status;
   } catch(err) {
     return err?.response?.status || 500;
