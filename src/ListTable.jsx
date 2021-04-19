@@ -14,7 +14,7 @@ const ListTable = ({ mediaList, modalHandler }) => {
     return list.sort((a, b) => a.title > b.title ? 1 : ((b.title > a.title) ? -1 : 0));
   }
   function filterListMediaByTitle(list, mediaTitle) {
-    return list.filter(e => e.title.includes(mediaTitle));
+    return list.filter(e => e.title.toLowerCase().includes(mediaTitle.toLowerCase()));
   }
 
   function createTableRows() {
