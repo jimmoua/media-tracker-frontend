@@ -72,7 +72,6 @@ export async function createNewMedia(media) {
     status: media.status
   };
   try {
-    // const response = await axios.post("/api/new", postData);
     const response = await axios.post(
       "/api/new",
       postData,
