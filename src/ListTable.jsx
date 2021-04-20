@@ -11,7 +11,7 @@ const ListTable = ({ mediaList, modalHandler }) => {
   const [searchField, setSearchField] = React.useState("");
 
   function sortListMediaListByTitle(list) {
-    return list.sort((a, b) => a.title > b.title ? 1 : ((b.title > a.title) ? -1 : 0));
+    return list.sort((a, b) => a.title.toLowerCase() > b.title.toLowerCase() ? 1 : ((b.title.toLowerCase() > a.title.toLowerCase()) ? -1 : 0));
   }
   function filterListMediaByTitle(list, mediaTitle) {
     return list.filter(e => e.title.toLowerCase().includes(mediaTitle.toLowerCase()));

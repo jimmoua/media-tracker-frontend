@@ -34,7 +34,7 @@ const MediaModal = ({ media, modalCloseHandler }) => {
     <div className="modal is-clipped is-active">
       <div className="modal-background" onClick={shouldCloseModal() ? modalCloseHandler : null} />
       <div className="modal-content">
-        <div className="box">
+        <div className="box" style={{ minHeight: "25rem" }}>
           <div className="media">
             <div className="media-content is-center">
               {statusMessage}
@@ -65,6 +65,7 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                     }}
                   />
                 </div>
+
                 <div className="field">
                   <label className="label is-fullwidth">Type</label>
                   <div className={dropdownClass}>
@@ -86,7 +87,7 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                       </button>
                     </div>
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
-                      <div className="dropdown-content">
+                      <div className="dropdown-content is-centered">
                         <a className="dropdown-item" onClick={() => dropDownItemOnClick("Show")}>Show</a>
                         <a className="dropdown-item" onClick={() => dropDownItemOnClick("Comic")}>Comic</a>
                         <a className="dropdown-item" onClick={() => dropDownItemOnClick("Novel")}>Novel</a>
@@ -101,8 +102,11 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                   onClick={shouldCloseModal() ? modalCloseHandler : null}
                 />
               </form>
-              <div className="column is-one-quarter is-centered container field">
-                <div className="buttons has-addons">
+
+              <div className="container column has-text-centered">
+
+                <div className="buttons is-centered">
+
                   <button
                     form="mediaUpdateForm"
                     className={btnLoading}
@@ -142,6 +146,7 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                   >
                     Update
                   </button>
+
                   <button
                     type={"button"}
                     className={btnDeleteCalled}
@@ -179,7 +184,9 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                     Delete
                   </button>
                 </div>
+
               </div>
+
             </div>
           </div>
         </div>

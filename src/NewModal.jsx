@@ -29,7 +29,7 @@ const NewModal = ({ modalCloseHandler }) => {
     <div className="modal is-clipped is-active">
       <div className="modal-background" onClick={shouldCloseModal() ? modalCloseHandler : null} />
       <div className="modal-content">
-        <div className="box">
+        <div className="box" style={{ minHeight: "25rem" }}>
           <div className="media">
             <div className="media-content is-center">
               {statusMessage}
@@ -97,7 +97,7 @@ const NewModal = ({ modalCloseHandler }) => {
                 />
               </form>
               <div className="column is-one-quarter is-centered container field">
-                <div className="buttons has-addons">
+                <div className="container column is-centered">
                   <button
                     form="mediaCreateForm"
                     className={btnLoading}

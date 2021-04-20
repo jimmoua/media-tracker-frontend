@@ -10,7 +10,7 @@ const TableRow = ({ media, modalHandler }) => {
   const dateFmtOptions = { year: "numeric", month: "short", day: "numeric" };
   return(
     <tr key={media.id} onClick={() => modalHandler({ id: media.id, title: media.title, type: media.type, status: media.status }) }>
-      <td>{media.title}</td>
+      <td>{media.title.length > 25 ? media.title.substr(0, 20).concat(" ...") : media.title}</td>
       <td>{media.type}</td>
       <td>{media.status}</td>
       <td>{media.last_updated ? new Date(media.last_updated).toLocaleString("en-Us", dateFmtOptions) : ""}</td>

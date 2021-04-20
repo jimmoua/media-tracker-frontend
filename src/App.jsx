@@ -2,7 +2,6 @@ import React from "react";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import Homepage from "./Homepage";
 import LoginPage from "./LoginPage";
-import "./app.css";
 import { Auth } from "aws-amplify";
 
 function App() {

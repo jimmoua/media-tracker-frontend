@@ -81,29 +81,33 @@ function Homepage() {
         <div className="hero-body">
           <p className="title">Media Tracker</p>
           <p className="subtitle">because i never know where i&apos;m at {"¯\\_(ツ)_/¯"}</p>
-          <div className="column is-mobile is-small is-one-fifth">
-            <button
-              className="button is-light is-small is-rounded"
-              onClick={setNewModal}
-            >
-              New
-            </button>
-            <button
-              className="button is-light is-small is-rounded mt-4 is-danger"
-              onClick={() => {
-                (async() => {
-                  try {
-                    await Auth.signOut();
-                    window.location.replace("/");
-                  } catch(err) {
-                    alert("unable to logout");
-                    console.error(err);
-                  }
-                })();
-              }}
-            >
-              Logout
-            </button>
+          <div className="column is-one-fifth">
+            <div className="container">
+              <button
+                className="button is-light is-small is-fullwidth"
+                onClick={setNewModal}
+              >
+                New
+              </button>
+            </div>
+            <div className="container">
+              <button
+                className="button is-light is-small mt-4 is-danger is-fullwidth"
+                onClick={() => {
+                  (async() => {
+                    try {
+                      await Auth.signOut();
+                      window.location.replace("/");
+                    } catch(err) {
+                      alert("unable to logout");
+                      console.error(err);
+                    }
+                  })();
+                }}
+              >
+                Logout
+              </button>
+            </div>
           </div>
         </div>
       </div>
