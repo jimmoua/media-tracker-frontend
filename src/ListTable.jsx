@@ -24,10 +24,7 @@ const ListTable = ({ mediaList, modalHandler }) => {
       _list.push(
         <TableRow
           key={_t[i].id}
-          type={_t[i].type}
-          id={_t[i].id}
-          title={_t[i].title}
-          status={_t[i].status}
+          media={_t[i]}
           modalHandler={modalHandler}
         />
       );
@@ -59,6 +56,7 @@ const ListTable = ({ mediaList, modalHandler }) => {
             <th>Media</th>
             <th>Type</th>
             <th>Status</th>
+            <th>Last updated</th>
           </tr>
         </thead>
         <tbody>

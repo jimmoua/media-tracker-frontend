@@ -3,27 +3,23 @@ import PropTypes from "prop-types";
 
 /**
  * @param id
- * @param title
- * @param type
- * @param status
- * @param modalHandler
+ * @param media
  * @returns {JSX.Element}
  */
-const TableRow = ({ id, title, type, status, modalHandler }) => {
+const TableRow = ({ media, modalHandler }) => {
+  const dateFmtOptions = { year: "numeric", month: "short", day: "numeric" };
   return(
-    <tr key={id} onClick={() => modalHandler({ id, title, type, status }) }>
-      <td>{title}</td>
-      <td>{type}</td>
-      <td>{status}</td>
+    <tr key={media.id} onClick={() => modalHandler({ id: media.id, title: media.title, type: media.type, status: media.status }) }>
+      <td>{media.title}</td>
+      <td>{media.type}</td>
+      <td>{media.status}</td>
+      <td>{media.last_updated ? new Date(media.last_updated).toLocaleString("en-Us", dateFmtOptions) : ""}</td>
     </tr>
   );
 };
 
 TableRow.propTypes = {
-  id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
+  media: PropTypes.object.isRequired,
   modalHandler: PropTypes.func
 };
 
