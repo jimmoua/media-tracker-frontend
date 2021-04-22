@@ -13,6 +13,7 @@ const MediaModal = ({ media, modalCloseHandler }) => {
   const [title, setTitle] = React.useState(media.title);
   const [status, setStatus] = React.useState(media.status);
   const [type, setType] = React.useState(media.type);
+  const [notes, setNotes] = React.useState(media.notes);
   const dropdownClassInactive = "dropdown";
   const dropdownClassActive = dropdownClassInactive.concat(" is-active");
   const [dropdownClass, setDropdownClass] = React.useState(dropdownClassInactive);
@@ -40,60 +41,87 @@ const MediaModal = ({ media, modalCloseHandler }) => {
               {statusMessage}
               <form id="mediaUpdateForm" onSubmit={e => e.preventDefault()}>
                 <div className="field">
-                  <label className="label">Title</label>
-                  <input
-                    required
-                    disabled={btnLoading.includes("is-loading") || deleted}
-                    type="text"
-                    className="input has-text-centered"
-                    value={title}
-                    onChange={(e) => {
-                      setTitle(e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="field">
-                  <label className="label">Status</label>
-                  <input
-                    required
-                    disabled={btnLoading.includes("is-loading") || deleted}
-                    type="text"
-                    className="input has-text-centered"
-                    value={status}
-                    onChange={(e) => {
-                      setStatus(e.target.value);
-                    }}
-                  />
-                </div>
-
-                <div className="field">
-                  <label className="label is-fullwidth">Type</label>
-                  <div className={dropdownClass}>
-                    <div className="dropdown-trigger">
-                      <button
-                        type={"button"}
-                        className="button"
-                        aria-haspopup="true"
-                        aria-controls="dropdown-menu"
-                        onClick={() => {
-                          setDropdownClass(dropdownClass === dropdownClassActive ? dropdownClassInactive : dropdownClassActive);
-                        }}
+                  <label className="label">
+                    Title
+                    <div>
+                      <input
+                        required
                         disabled={btnLoading.includes("is-loading") || deleted}
-                      >
-                        <span>{type}</span>
-                        <span className="icon is-small">
-                          <i className="fas fa-angle-down" aria-hidden="true" />
-                        </span>
-                      </button>
+                        type="text"
+                        className="input has-text-centered"
+                        value={title}
+                        onChange={(e) => {
+                          setTitle(e.target.value);
+                        }}
+                      />
                     </div>
-                    <div className="dropdown-menu" id="dropdown-menu" role="menu">
-                      <div className="dropdown-content is-centered">
-                        <a className="dropdown-item" onClick={() => dropDownItemOnClick("Show")}>Show</a>
-                        <a className="dropdown-item" onClick={() => dropDownItemOnClick("Comic")}>Comic</a>
-                        <a className="dropdown-item" onClick={() => dropDownItemOnClick("Novel")}>Novel</a>
+                  </label>
+                </div>
+                <div className="field">
+                  <label className="label">
+                    Status
+                    <div>
+                      <input
+                        required
+                        disabled={btnLoading.includes("is-loading") || deleted}
+                        type="text"
+                        className="input has-text-centered"
+                        value={status}
+                        onChange={(e) => {
+                          setStatus(e.target.value);
+                        }}
+                      />
+                    </div>
+                  </label>
+                </div>
+                <div className="field">
+                  <label htmlFor="mediaUpdateForm" className="label">
+                    Notes
+                    <div>
+                      <textarea
+                        name="notes"
+                        rows="3"
+                        className="textarea has-text-centered"
+                        style={{ resize: "none" }}
+                        onChange={ev => setNotes(ev.target.value)}
+                        value={notes}
+                      >
+                      </textarea>
+                    </div>
+                  </label>
+                </div>
+                <div className="field">
+                  <label className="label is-fullwidth">
+                    Type
+                    <div>
+                      <div className={dropdownClass}>
+                        <div className="dropdown-trigger">
+                          <button
+                            type={"button"}
+                            className="button"
+                            aria-haspopup="true"
+                            aria-controls="dropdown-menu"
+                            onClick={() => {
+                              setDropdownClass(dropdownClass === dropdownClassActive ? dropdownClassInactive : dropdownClassActive);
+                            }}
+                            disabled={btnLoading.includes("is-loading") || deleted}
+                          >
+                            <span>{type}</span>
+                            <span className="icon is-small">
+                              <i className="fas fa-angle-down" aria-hidden="true" />
+                            </span>
+                          </button>
+                        </div>
+                        <div className="dropdown-menu" id="dropdown-menu" role="menu">
+                          <div className="dropdown-content is-centered">
+                            <a className="dropdown-item" onClick={() => dropDownItemOnClick("Show")}>Show</a>
+                            <a className="dropdown-item" onClick={() => dropDownItemOnClick("Comic")}>Comic</a>
+                            <a className="dropdown-item" onClick={() => dropDownItemOnClick("Novel")}>Novel</a>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </label>
                 </div>
                 <button
                   type="button"
@@ -118,7 +146,7 @@ const MediaModal = ({ media, modalCloseHandler }) => {
                         setBtnLoading(btnLoadingClass);
                         const statusCode = await updateMediaList({
                           id: media.id,
-                          title, status, type
+                          title, status, type, notes
                         });
                         setBtnLoading(defaultBtnSubmitClass);
                         if(statusCode !== 200) {

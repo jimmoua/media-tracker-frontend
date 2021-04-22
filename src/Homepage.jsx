@@ -17,17 +17,19 @@ function Homepage() {
       return;
     }
     setModal(undefined);
+    document.getElementById("html").className = "";
   }
 
   function modalSetHandler(e) {
-    setModal(undefined);
     setModal(
       <MediaModal media={e} modalCloseHandler={modalCloseHandler} />
     );
+    document.getElementById("html").className = "is-clipped";
   }
   
   function setNewModal() {
     setModal(<NewModal modalCloseHandler={modalCloseHandler} />);
+    document.getElementById("html").className = "is-clipped";
   }
 
   function fetchAndSetList() {

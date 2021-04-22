@@ -50,7 +50,7 @@ const ListTable = ({ mediaList, modalHandler }) => {
           </div>
         </div>
       </div>
-      <table className="table is-hoverable is-fullwidth">
+      <table className="table is-hoverable is-fullwidth is-mobile">
         <thead>
           <tr>
             <th>Media</th>

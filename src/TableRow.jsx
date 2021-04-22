@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 const TableRow = ({ media, modalHandler }) => {
   const dateFmtOptions = { year: "numeric", month: "short", day: "numeric" };
   return(
-    <tr key={media.id} onClick={() => modalHandler({ id: media.id, title: media.title, type: media.type, status: media.status }) }>
+    <tr key={media.id} onClick={() => modalHandler({ id: media.id, title: media.title, type: media.type, status: media.status, notes: media.notes }) }>
       <td>{media.title.length > 25 ? media.title.substr(0, 20).concat(" ...") : media.title}</td>
       <td>{media.type}</td>
       <td>{media.status}</td>

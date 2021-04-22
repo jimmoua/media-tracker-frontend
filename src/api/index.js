@@ -30,7 +30,8 @@ export async function updateMediaList(media) {
     id: media.id,
     title: media.title,
     status: media.status,
-    type: media.type
+    type: media.type,
+    notes: media.notes
   };
   try {
     const response = await axios.post(
@@ -69,7 +70,8 @@ export async function createNewMedia(media) {
   const postData = {
     title: media.title,
     type: media.type,
-    status: media.status
+    status: media.status,
+    notes: media.notes
   };
   try {
     const response = await axios.post(
