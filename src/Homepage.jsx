@@ -2,9 +2,9 @@ import React from "react";
 import Loader from "react-spinners/BeatLoader";
 import ShowError from "./ShowError";
 import { fetchMediaList } from "./api";
-import ListTable from "./ListTable";
-import MediaModal from "./MediaModal";
-import NewModal from "./NewModal";
+import ListTable from "./MediaTable/ListTable";
+import MediaModal from "./Modals/MediaModal";
+import NewModal from "./Modals/NewModal";
 import { Auth } from "aws-amplify";
 
 function Homepage() {

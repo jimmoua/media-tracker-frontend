@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { updateMediaList } from "./api";
-import { deleteMediaList } from "./api";
+import { updateMediaList } from "../api";
+import { deleteMediaList } from "../api";
 
 /**
  * @param media

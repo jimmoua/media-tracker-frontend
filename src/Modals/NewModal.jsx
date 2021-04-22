@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { createNewMedia } from "./api";
+import { createNewMedia } from "../api";
 
 /**
  * @param modalCloseHandler
