@@ -12,7 +12,7 @@ const token = async() => {
 export async function fetchMediaList() {
   try {
     const response = await axios.get(
-      "/api/all",
+      "/api/media/all",
       {
         headers: {
           "Authorization": await token()
@@ -26,23 +26,17 @@ export async function fetchMediaList() {
 }
 
 export async function updateMediaList(media) {
-  const postData = {
+  const newMedia = {
     id: media.id,
-    title: media.title,
-    status: media.status,
-    type: media.type,
-    notes: media.notes
+    media: {
+      title: media.title,
+      status: media.status,
+      type: media.type,
+      notes: media.notes
+    }
   };
   try {
-    const response = await axios.post(
-      "/api/update",
-      postData,
-      {
-        headers: {
-          "Authorization": await token()
-        }
-      }
-    );
+    const response = await axios.put("/api/media", newMedia, { headers: { "Authorization": await token() } });
     return response.status;
   } catch (err) {
     return err?.response?.status || 500;
@@ -51,10 +45,10 @@ export async function updateMediaList(media) {
 
 export async function deleteMediaList(id) {
   try {
-    const response = await axios.post(
-      "/api/delete",
-      { id },
+    const response = await axios.delete(
+      "/api/media",
       {
+        data: { id },
         headers: {
           "Authorization": await token()
         }
@@ -75,7 +69,7 @@ export async function createNewMedia(media) {
   };
   try {
     const response = await axios.post(
-      "/api/new",
+      "/api/media",
       postData,
       {
         headers: {
