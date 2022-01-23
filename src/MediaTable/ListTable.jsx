@@ -10,15 +10,15 @@ import TableRow from "./TableRow";
 const ListTable = ({ mediaList, modalHandler }) => {
   const [searchField, setSearchField] = React.useState("");
 
-  function sortListMediaListByTitle(list) {
-    return list.sort((a, b) => a.title.toLowerCase() > b.title.toLowerCase() ? 1 : ((b.title.toLowerCase() > a.title.toLowerCase()) ? -1 : 0));
+  function sortListMediaListByDate(list) {
+    return list.sort((a, b) => new Date(b.last_updated) - new Date(a.last_updated));
   }
   function filterListMediaByTitle(list, mediaTitle) {
     return list.filter(e => e.title.toLowerCase().includes(mediaTitle.toLowerCase()));
   }
 
   function createTableRows() {
-    const _t = sortListMediaListByTitle(filterListMediaByTitle(mediaList, searchField));
+    const _t = sortListMediaListByDate(filterListMediaByTitle(mediaList, searchField));
     const _list = [];
     for(let i = 0; i < _t.length; i++) {
       _list.push(
